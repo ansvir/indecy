@@ -3,34 +3,41 @@ package org.itique.indecy.core.dsl
 class CaseDsl {
 
     private String name
-    private BranchDsl[] branches
+    private BranchesDsl branches
+    private BranchDsl defaultBranch
+    private Closure closure
 
-    CaseDsl() {
-        branches = []
-    }
-
-    void name(String name) {
+    CaseDsl(String name, Closure closure) {
         this.name = name
+        this.closure = closure
     }
 
-    void branchDef(@DelegatesTo(value = BranchDsl.class, strategy = Closure.DELEGATE_ONLY) Closure closure) {
-        BranchDsl branch = new BranchDsl()
+    def branches(@DelegatesTo(value = BranchesDsl.class, strategy = Closure.DELEGATE_ONLY) Closure closure) {
+        BranchesDsl branches = new BranchesDsl()
+        closure.delegate = branches
+        closure.resolveStrategy = Closure.DELEGATE_ONLY
+        closure.call()
+    }
+
+    def branches(BranchDsl branch) {
+        if (!branch) {
+            throw new IllegalArgumentException("Branch should not be null!")
+        }
         branches << branch
+    }
+
+    def defaultBranch(@DelegatesTo(value = DefaultBranchDsl.class, strategy = Closure.DELEGATE_ONLY) Closure closure) {
+        DefaultBranchDsl branch = new DefaultBranchDsl()
         closure.delegate = branch
         closure.resolveStrategy = Closure.DELEGATE_ONLY
         closure.call()
     }
 
-    void branchDef(BranchDsl branch) {
-        branches << branch
-    }
-
-    void defaultBranch(@DelegatesTo(value = BranchDsl, strategy = Closure.DELEGATE_ONLY) Closure closure) {
-        branchDef(closure)
-    }
-
-    void defaultBranch(BranchDsl branch) {
-        branches << branch
+    def defaultBranch(BranchDsl branch) {
+        if (!branch) {
+            throw new IllegalArgumentException("Default branch should not be null!")
+        }
+        defaultBranch = branch
     }
 
 }

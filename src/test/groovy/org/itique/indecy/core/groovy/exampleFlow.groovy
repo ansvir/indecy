@@ -1,6 +1,6 @@
 package org.itique.indecy.core.groovy
 
-import org.itique.indecy.core.dsl.BranchDsl
+
 import org.itique.indecy.core.dsl.FlowDsl
 
 //new Flow() [
@@ -21,30 +21,30 @@ import org.itique.indecy.core.dsl.FlowDsl
 //]
 //]
 
-FlowDsl.open {
+FlowDsl.openFlow {
     name "INIT_FLOW"
     cases {
-        caseDef {
-            name "INIT_CASE"
-            branchDef { params ->
+        caseDef("INIT_CASE") {
+            branches {
                 branch "INIT_BRANCH" targeting "SOME_BRANCH" matches 1.0 + 1.0 > 2.0 returns 1.0
+                branch "INIT_BRANCH2" targeting "SOME_CASE" matches 1.0 + 2.0 < 10.0 returns 2.0
+                branch "INIT_BRANCH2" targeting "SOME_CASE" matches 1.0 + 2.0 < 10.0 returns 2.0
+                branch "INIT_BRANCH2" targeting "SOME_CASE" matches 1.0 + 2.0 < 10.0 returns 2.0
+                branch "INIT_BRANCH2" targeting "SOME_CASE" matches 1.0 + 2.0 < 10.0 returns 2.0
             }
-            branchDef { params ->
-                branch "INIT_BRANCH" targeting "SOME_BRANCH" matches 1.0 + 1.0 > 2.0 returns 1.0
+            defaultBranch {
+                branch "DSADSA" targeting "DSADSA"
             }
-            branchDef { params ->
-                branch "INIT_BRANCH" targeting "SOME_BRANCH" matches 1.0 + 1.0 > 2.0 returns 1.0
-            }
+
         }
-        caseDef {
-            name "INIT_CASE_2"
-            branchDef { params ->
+        caseDef("INIT_CASE2") {
+            branches { params ->
                 branch "INIT_BRANCH" targeting "SOME_BRANCH" matches 1.0 + 1.0 > 2.0 returns 1.0
             }
-            branchDef { params ->
+            branches { params ->
                 branch "INIT_BRANCH" targeting "SOME_BRANCH" matches 1.0 + 1.0 > 2.0 returns 1.0
             }
-            branchDef { params ->
+            branches { params ->
                 branch "INIT_BRANCH" targeting "SOME_BRANCH" matches 1.0 + 1.0 > 2.0 returns 1.0
             }
         }

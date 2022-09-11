@@ -5,34 +5,30 @@ import jdk.internal.joptsimple.internal.Strings
 class BranchDsl {
 
     String name
-    String branchName
+    String caseName
     boolean condition
     double adjustment
 
-    BranchDsl branch(String name) {
+    def branch = { String name ->
         if (name || name == Strings.EMPTY) {
             throw new IllegalArgumentException("Branch name should not be null or empty!")
         }
         this.name = name
-        return this
     }
 
-    BranchDsl targeting(String branchName) {
-        if (branchName || branchName == Strings.EMPTY) {
+    def targeting = { String caseName ->
+        if (caseName || caseName == Strings.EMPTY) {
             throw new IllegalArgumentException("Target branch name should not be null or empty!")
         }
-        this.branchName = branchName
-        return this
+        this.caseName = caseName
     }
 
-    BranchDsl matches(boolean condition) {
+    def matches = { boolean condition ->
         this.condition = condition
-        return this
     }
 
-    BranchDsl returns(double adjustment) {
+    def returns = { double adjustment ->
         this.adjustment = adjustment
-        return this
     }
 
 }

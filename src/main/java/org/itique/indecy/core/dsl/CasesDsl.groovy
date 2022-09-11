@@ -4,7 +4,7 @@ class CasesDsl {
 
     CaseDsl[] cases
 
-    void caseDef(String name, @DelegatesTo(value = CaseDsl.class, strategy = Closure.DELEGATE_ONLY) Closure closure) {
+    def caseDef(String name, @DelegatesTo(value = CaseDsl.class, strategy = Closure.DELEGATE_ONLY) Closure closure) {
         CaseDsl newCase = new CaseDsl(name, closure)
         cases << newCase
         closure.delegate = newCase

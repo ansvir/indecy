@@ -1,5 +1,8 @@
 package org.itique.indecy.core.flow;
 
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,16 +10,12 @@ public class Flow {
 
     private Double result;
 
-    private Flow(Map<String, Double> params, Double initValue) {
-        process(params, initValue);
+    private Flow(Double result) {
+        this.result = result;
     }
 
     public Double getResult() {
         return this.result;
-    }
-
-    private void process(Map<String, Double> params, Double initValue) {
-        this.result = 0.1;
     }
 
     public static Builder builder(Double initValue) {
@@ -38,8 +37,11 @@ public class Flow {
             return this;
         }
 
-        public Flow build() {
-            return new Flow(this.params, this.initValue);
+        public Flow runFlow(String path) {
+            Binding binding = new Binding();
+            GroovyShell shell = new GroovyShell(binding);
+            Double result = (Double) shell.evaluate(path);
+            return new Flow(result);
         }
 
     }
