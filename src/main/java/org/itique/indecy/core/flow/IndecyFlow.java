@@ -1,15 +1,19 @@
 package org.itique.indecy.core.flow;
 
 import org.itique.indecy.core.dsl.Branch;
+import org.itique.indecy.core.dsl.FinalCase;
+import org.itique.indecy.core.dsl.RegularBranch;
 import org.itique.indecy.core.dsl.Case;
+import org.itique.indecy.core.dsl.RegularCase;
 import org.itique.indecy.core.dsl.Cases;
 import org.itique.indecy.core.dsl.DslScript;
-import org.itique.indecy.core.dsl.FinalCase;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.itique.indecy.core.dsl.constant.TargetStrategy.FINAL_CASE;
 
@@ -48,54 +52,52 @@ public class IndecyFlow {
             DslScript script = new DslScript(params, file);
             Cases casesDsl = (Cases) script.run();
             List<Case> cases = casesDsl.getCases();
-            FinalCase finalCase = casesDsl.getFinalCase();
+            Case finalCase = casesDsl.getCases().stream().filter(c -> c instanceof FinalCase).findFirst().get();
             Double result = initValue;
-//            AtomicReference<Double> result = new AtomicReference<>(initValue);
-//            try {
-            for (Case c : cases) {
-                Case nextTargetCase = null;
-                for (Case targetCase : cases) {
-                    nextTargetCase = targetCase;
-                    Branch defBranch = c.getDefaultBranch().getDefaultBranch();
-                    Branch matchedBranch = c.getBranches().getBranches().stream()
-                            .filter(Branch::getCondition).findFirst().orElse(defBranch);
-                    if (!targetCase.getName().equals(FINAL_CASE)) {
-                        if (targetCase.getName().equals(matchedBranch.getCaseName())) {
-                            result += matchedBranch.getAdjustment();
-                        }
-                    } else {
-                        Branch finalDefBranch = finalCase.getDefaultBranch().getDefaultBranch();
-                        Branch finalMatchedBranch = finalCase.getBranches().getBranches().stream()
-                                .filter(Branch::getCondition).findFirst().orElse(finalDefBranch);
-                        result += finalMatchedBranch.getAdjustment();
+            Case targetCase = null;
+
+            if (Arrays.stream(finalCase.getOptions()).anyMatch(o -> o == Case.Option.IS_FIRST)) {
+                Branch finalDefBranch = finalCase.getDefaultBranch().getDefaultBranch();
+                Branch finalMatchedBranch = finalCase.getBranches().getBranches().stream()
+                        .filter(Branch::getCondition).findFirst().orElse(finalDefBranch);
+                result += finalMatchedBranch.getAdjustment();
+                return new IndecyFlow(result);
+            } else {
+                for (int i = 0; i < cases.size(); i++) {
+                    if (Arrays.stream(cases.get(i).getOptions()).anyMatch(o -> o == Case.Option.IS_FIRST)) {
+                        targetCase = cases.get(i);
                         break;
                     }
                 }
+            }
 
-                if (nextTargetCase.getName().equals(FINAL_CASE)) {
+            Branch firstDefBranch = targetCase.getDefaultBranch().getDefaultBranch();
+            Branch firstMatchedBranch = targetCase.getBranches().getBranches().stream()
+                    .filter(Branch::getCondition).findFirst().orElse(firstDefBranch);
+            result += firstMatchedBranch.getAdjustment();
+
+            targetCase = cases.stream().filter(c -> c.getName().equals(firstMatchedBranch.getTargetCase())).findFirst().get();
+
+            for (int i = 0; i < cases.size() + 1; i++) {
+                Branch defBranch = targetCase.getDefaultBranch().getDefaultBranch();
+                Branch matchedBranch = targetCase.getBranches().getBranches().stream()
+                        .filter(Branch::getCondition).findFirst().orElse(defBranch);
+                result += matchedBranch.getAdjustment();
+                if (matchedBranch.getTargetCase().equals(FINAL_CASE)) {
+                    Branch finalDefBranch = finalCase.getDefaultBranch().getDefaultBranch();
+                    Branch finalMatchedBranch = finalCase.getBranches().getBranches().stream()
+                            .filter(Branch::getCondition).findFirst().orElse(finalDefBranch);
+                    result += finalMatchedBranch.getAdjustment();
                     break;
                 }
+                Optional<Case> optionalTargetCase = cases.stream().filter(c -> c.getName().equals(matchedBranch.getTargetCase())).findFirst();
+                if (optionalTargetCase.isEmpty()) {
+                    break;
+                } else {
+                    targetCase = optionalTargetCase.get();
+                }
             }
-//                cases.forEach(targetCase ->
-//                        cases.forEach(c -> {
-//                            Branch defBranch = targetCase.getDefaultBranch().getDefaultBranch();
-//                            Branch matchedBranch = targetCase.getBranches().getBranches().stream()
-//                                    .filter(Branch::getCondition).findFirst().orElse(defBranch);
-//                            if (c.getName() != null) {
-//                                if (c.getName().equals(matchedBranch.getCaseName())) {
-//                                    result.set(result.get() + matchedBranch.getAdjustment());
-//                                }
-//                            } else {
-//                                result.set(result.get() + matchedBranch.getAdjustment());
-//                                throw new LoopInterruptionException();
-//                            }
-//                        }));
-//            } catch (LoopInterruptionException e) {
-//                // stub
-//            }
             return new IndecyFlow(result);
         }
-
     }
-
 }

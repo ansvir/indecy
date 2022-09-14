@@ -1,7 +1,5 @@
 package org.itique.indecy.core.dsl
 
-import java.nio.file.Path
-
 class DslScript extends Script {
 
     Map<String, Double> params

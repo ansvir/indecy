@@ -1,21 +1,9 @@
 package org.itique.indecy.core.dsl
 
-class Branch {
+abstract class Branch {
 
-    String caseName
+    String targetCase
     boolean condition
     Double adjustment
-
-    def targeting = { String caseName ->
-        this.caseName = caseName
-    }
-
-    def matches = { boolean condition ->
-        this.condition = condition
-    }
-
-    def returns = { double adjustment ->
-        this.adjustment = adjustment
-    }
 
 }
