@@ -24,8 +24,8 @@ class FinalCase extends Case {
         closure.call()
     }
 
-    def options(Option[] options) {
-        this.options = options;
+    def options(CaseOption[] options) {
+        this.options = options
     }
 
 }

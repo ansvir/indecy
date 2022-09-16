@@ -1,25 +1,22 @@
 package org.itique.indecy.core.flow;
 
 import org.itique.indecy.core.dsl.Branch;
-import org.itique.indecy.core.dsl.FinalCase;
-import org.itique.indecy.core.dsl.RegularBranch;
 import org.itique.indecy.core.dsl.Case;
-import org.itique.indecy.core.dsl.RegularCase;
+import org.itique.indecy.core.dsl.CaseOption;
 import org.itique.indecy.core.dsl.Cases;
 import org.itique.indecy.core.dsl.DslScript;
+import org.itique.indecy.core.dsl.FinalCase;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.itique.indecy.core.dsl.constant.TargetStrategy.FINAL_CASE;
 
 public class IndecyFlow {
 
-    private Double result;
+    private final Double result;
 
     private IndecyFlow(Double result) {
         this.result = result;
@@ -35,15 +32,20 @@ public class IndecyFlow {
 
     public static class Builder {
 
-        private final Map<String, Double> params;
+        private Parameters params;
         private final Double initValue;
 
         public Builder(Double initValue) {
-            this.params = new HashMap<>();
+            this.params = new Parameters();
             this.initValue = initValue;
         }
 
-        public Builder addParam(String key, Double value) {
+        public Builder setParams(Parameters params) {
+            this.params = params;
+            return this;
+        }
+
+        public Builder addParam(Object key, Double value) {
             this.params.put(key, value);
             return this;
         }
@@ -56,7 +58,7 @@ public class IndecyFlow {
             Double result = initValue;
             Case targetCase = null;
 
-            if (Arrays.stream(finalCase.getOptions()).anyMatch(o -> o == Case.Option.IS_FIRST)) {
+            if (Arrays.stream(finalCase.getOptions()).anyMatch(o -> o == CaseOption.IS_FIRST)) {
                 Branch finalDefBranch = finalCase.getDefaultBranch().getDefaultBranch();
                 Branch finalMatchedBranch = finalCase.getBranches().getBranches().stream()
                         .filter(Branch::getCondition).findFirst().orElse(finalDefBranch);
@@ -64,7 +66,7 @@ public class IndecyFlow {
                 return new IndecyFlow(result);
             } else {
                 for (int i = 0; i < cases.size(); i++) {
-                    if (Arrays.stream(cases.get(i).getOptions()).anyMatch(o -> o == Case.Option.IS_FIRST)) {
+                    if (Arrays.stream(cases.get(i).getOptions()).anyMatch(o -> o == CaseOption.IS_FIRST)) {
                         targetCase = cases.get(i);
                         break;
                     }

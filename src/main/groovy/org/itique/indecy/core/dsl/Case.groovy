@@ -6,10 +6,6 @@ abstract class Case {
     Branches branches
     DefaultBranch defaultBranch
     protected Closure closure
-    Option[] options
-
-    enum Option {
-        IS_FIRST
-    }
+    CaseOption[] options
 
 }

@@ -22,7 +22,7 @@ class RegularCase extends Case {
         closure.call()
     }
 
-    def options(Option[] options) {
+    def options(CaseOption[] options) {
         this.options = options
     }
 

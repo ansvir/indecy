@@ -1,8 +1,11 @@
 package org.itique.indecy.core.groovy
 
+
 import org.itique.indecy.core.dsl.Case
-import org.itique.indecy.core.dsl.RegularCase
+import org.itique.indecy.core.dsl.CaseOption
 import org.itique.indecy.core.dsl.Flow
+import org.itique.indecy.core.dsl.RegularCase
+import org.itique.indecy.core.dsl.constant.TargetStrategy
 
 import static org.itique.indecy.core.dsl.constant.TargetStrategy.FINAL_CASE
 
@@ -31,7 +34,7 @@ Flow.declare {
         defaultBranch {
             branch_targeting FINAL_CASE returns 1.0
         }
-        options Case.Option.IS_FIRST
+        options CaseOption.IS_FIRST
     }
 
     declareCase(ERI) {
@@ -43,7 +46,6 @@ Flow.declare {
         defaultBranch {
             branch_targeting FINAL_CASE returns 2.0
         }
-        options RegularCase.Option.IS_FIRST
     }
 
     declareFinalCase {
