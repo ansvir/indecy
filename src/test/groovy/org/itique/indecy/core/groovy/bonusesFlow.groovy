@@ -7,13 +7,16 @@ import org.itique.indecy.core.dsl.Flow
 import static org.itique.indecy.core.dsl.constant.TargetStrategy.FINAL_CASE
 
 // This example flow describes influence of awarding employees with bonuses
+//
 // Next cases can be declared in any order, considering they should target to some other case except final case
-// All values are abstract and in future will be introduced parameters to avoid hardcoded values and assign them dynamically, like next:
+// All values are abstract in this example. You can use next script with parameters like:
 // branch_targeting ERI
 //    matches params.PENALTIES + 100.0 < params.MAX_PENALTIES
 //        & params.PROGRESS <= 0.5
 //        & params.PERFORMANCE + 0.2 > 11.0
 //    returns 1.5
+//
+// Original parameters come from Java code within addParam(key, value) method
 
 // This variables contain cases names.
 // It's optional to declare them as a variables, they can be constants or enum values

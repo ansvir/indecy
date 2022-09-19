@@ -1,12 +1,9 @@
 package org.itique.indecy.core.flow;
 
 import org.itique.indecy.core.dsl.Branch;
-import org.itique.indecy.core.dsl.FinalCase;
-import org.itique.indecy.core.dsl.RegularBranch;
 import org.itique.indecy.core.dsl.Case;
-import org.itique.indecy.core.dsl.RegularCase;
 import org.itique.indecy.core.dsl.Cases;
-import org.itique.indecy.core.dsl.DslScript;
+import org.itique.indecy.core.dsl.FinalCase;
 
 import java.io.File;
 import java.util.Arrays;
@@ -19,38 +16,31 @@ import static org.itique.indecy.core.dsl.constant.TargetStrategy.FINAL_CASE;
 
 public class IndecyFlow {
 
-    private Double result;
+    private final Double result;
 
     private IndecyFlow(Double result) {
         this.result = result;
     }
 
     public Double getResult() {
-        return this.result;
+        return result;
     }
 
-    public static Builder builder(Double initValue) {
-        return new Builder(initValue);
+    public static Runner.Builder builder(Double initValue) {
+        return new Runner.Builder(initValue);
     }
 
-    public static class Builder {
+    public static class Runner extends IndecyContext {
 
-        private final Map<String, Double> params;
         private final Double initValue;
 
-        public Builder(Double initValue) {
-            this.params = new HashMap<>();
+        public Runner(Map<Object, Double> params, Double initValue, File scriptFile) {
+            super(params, scriptFile);
             this.initValue = initValue;
         }
 
-        public Builder addParam(String key, Double value) {
-            this.params.put(key, value);
-            return this;
-        }
-
-        public IndecyFlow runFlow(File file) {
-            DslScript script = new DslScript(params, file);
-            Cases casesDsl = (Cases) script.run();
+        public IndecyFlow runFlow() {
+            Cases casesDsl = (Cases) run();
             List<Case> cases = casesDsl.getCases();
             Case finalCase = casesDsl.getCases().stream().filter(c -> c instanceof FinalCase).findFirst().get();
             Double result = initValue;
@@ -98,6 +88,26 @@ public class IndecyFlow {
                 }
             }
             return new IndecyFlow(result);
+        }
+
+        public static class Builder {
+
+            private final Map<Object, Double> params;
+            private final Double initValue;
+
+            public Builder(Double initValue) {
+                this.params = new HashMap<>();
+                this.initValue = initValue;
+            }
+
+            public Builder addParam(Object key, Double value) {
+                this.params.put(key, value);
+                return this;
+            }
+
+            public Runner create(File scriptFile) {
+                return new Runner(params, initValue, scriptFile);
+            }
         }
     }
 }

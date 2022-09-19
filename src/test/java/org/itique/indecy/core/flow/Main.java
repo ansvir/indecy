@@ -1,7 +1,6 @@
 package org.itique.indecy.core.flow;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class Main {
 
@@ -17,8 +16,9 @@ public class Main {
                 .addParam(PERFORMANCE, 0.5)
                 .addParam(PENALTIES, 0.2)
                 .addParam(PROGRESS, 1.0)
-                .runFlow(new File("src/test/groovy/org/itique/indecy/core/groovy/bonusesFlow.groovy"));
-        System.out.println(flow.getResult().doubleValue());
+                .create(new File("src/test/groovy/org/itique/indecy/core/groovy/bonusesFlow.groovy"))
+                .runFlow();
+        System.out.println(flow.getResult());
     }
 
 }
