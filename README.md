@@ -35,8 +35,6 @@ Version 1.0-SNAPSHOT
 - Developed MVP
 
 ### TODO (In order of priority):
-1. Migrate to tree data structure
-2. Move `org.itique.indecy.core.dsl.FinalCase` to `org.itique.indecy.core.dsl.Case.Option`
-3. Add parameters processing
-4. Add dynamically branch returned result to parameters
-5. Add validation
+1. Add dynamically branch returned result to parameters
+2. Add validation
+3. Move `org.itique.indecy.core.dsl.FinalCase` to `org.itique.indecy.core.dsl.Case.Option`
