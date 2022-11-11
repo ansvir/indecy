@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<BorderPane fx:id="borderPane" fx:controller="org.itique.indecy.ui.controller.ProjectController"
+            xmlns:fx="http://javafx.com/fxml">
+    <left>
+        <VBox spacing="5">
+            <ImageView id="boxImage">
+                <Image url="@images/logo-indecy.png"/>
+            </ImageView>
+            <Button text="Open Project" onAction="#handleShowNewProjectView" style="-fxbackground-color: transparent"/>
+            <Button text="Create new Project" onAction="#handleShowOpenProjectView" style="-fxbackground-color: transparent"/>
+            <Button text="Help" onAction="#handleShowHelpView" style="-fxbackground-color: transparent"/>
+            <padding>
+                <Insets top="50.0"/>
+            </padding>
+            <Label>Indecy v1.0.1</Label>
+        </VBox>
+    </left>
+    <center>
+        <fx:include source="menu-view.fxml"/>
+    </center>
+</BorderPane>

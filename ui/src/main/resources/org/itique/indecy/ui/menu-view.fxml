@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.itique.indecy.ui.controller.ProjectController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <Label>Welcome to Indecy Business Processes Creator!</Label>
+    <Label>Continue by creating a new project or opening existing</Label>
+    <Button text="New" style="-fx-background-color: #1ABAD5; -fx-text-fill: white"/>
+    <Button text="Open" style="-fx-background-color: #1ABAD5; -fx-text-fill: white"/>
+</VBox>
