@@ -22,9 +22,11 @@ Flow.declare {
 
     declareCase(PI) {
         branches {
+            branch_targeting ERI matches params.PENALTIES + 100.0 < params.MAX_PENALTIES
+                    & params.PROGRESS <= 0.5
+                    & params.PERFORMANCE * 50.0 > 11.0 returns 1.5
             branch_targeting ERI matches 1.0 + 2.0 > 10.0 returns 2.0
-            branch_targeting ERI matches 1.0 - 2.0 < 10.0 returns -0.5
-            branch_targeting ERI matches 1.0 + 2.0 + 5.5 >= 10.0 returns 1.5
+            branch_targeting ERI matches defaults.ONE - 2.0 > 8.0 returns -0.5
         }
         defaultBranch {
             branch_targeting FINAL_CASE returns 1.0
@@ -35,7 +37,7 @@ Flow.declare {
     declareCase(ERI) {
         branches {
             branch_targeting FINAL_CASE matches 100.0 * 1.5 < 10.0 returns 0.5
-            branch_targeting FINAL_CASE matches 20.0 + 2.0 > 10.0 returns 0.7
+            branch_targeting FINAL_CASE matches 20.0 + 2.0 > 10.0 returns 0.2
             branch_targeting FINAL_CASE matches 1.0 + 2.0 >= 10.0 returns -0.1
         }
         defaultBranch {

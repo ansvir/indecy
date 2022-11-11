@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static org.itique.indecy.core.flow.Defaults.getMapDefaults;
+
 public abstract class IndecyContext extends Script {
 
     private Map<Object, Double> params;
@@ -25,6 +27,7 @@ public abstract class IndecyContext extends Script {
     public Object run() {
         Binding binding = this.getBinding();
         binding.setVariable("params", this.params);
+        binding.setVariable("defaults", getMapDefaults());
         GroovyShell shell = new GroovyShell(binding);
         try {
             Script script = shell.parse(prepareScript(scriptFile));
@@ -40,6 +43,7 @@ public abstract class IndecyContext extends Script {
                 .filter(index -> lines.get(index).contains("Flow.declare"))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("Script " + scriptFile + " does not con contain Flow declaration!"));
         lines.add(declarationIndex - 1, "def params = this.params");
+        lines.add(declarationIndex - 2, "def defaults = this.defaults");
         return String.join("\n", lines);
     }
 }
