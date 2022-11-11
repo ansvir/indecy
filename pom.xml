@@ -5,29 +5,33 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.itique.indecy</groupId>
-    <artifactId>indecy-core</artifactId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.1-SNAPSHOT</version>
+    <name>indecy / parent</name>
+
+    <modules>
+        <module>core</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <groovy.version>3.0.13</groovy.version>
         <junit.version>5.9.0</junit.version>
+        <groovy-eclipse-compiler.version>2.8.0-01</groovy-eclipse-compiler.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${groovy.version}</version>
-        </dependency>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-        <!-- test dependencies -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>
