@@ -5,10 +5,8 @@ import org.itique.indecy.coregroovy.dsl.Case;
 import org.itique.indecy.coregroovy.dsl.Cases;
 import org.itique.indecy.coregroovy.dsl.FinalCase;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;

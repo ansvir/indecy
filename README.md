@@ -54,6 +54,7 @@ System.out.println(flow.getResult().doubleValue());
 
 Console output will be `3.8` (after rounding)
 ### Changelog
+
 Version 1.0.1-SNAPSHOT
 
 - Added parameters
