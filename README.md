@@ -16,7 +16,7 @@ Generally, `switch` instruction in Java is very similar to logic of Indecy in cu
 ## Sample usage
 ### Example 1:
 #### Prerequisites:
-1. We have example flow (DSL script): `org/itique/indecy/core/groovy/bonusesFlow.groovy`
+1. We have example flow (DSL script): [bonusesFlow.groovy](https://github.com/ansvir/indecy/blob/master/core/core-java/src/test/resources/bonusesFlow.groovy)
 2. We have next declaration: 
 ```java
 double startIndex = 1.0;
@@ -30,7 +30,7 @@ System.out.println(flow.getResult().doubleValue());
 Console output will be `2.3` (after rounding)
 ### Example 2 (with parameters):
 #### Prerequisites:
-1. We have example flow (DSL script): `org/itique/indecy/core/groovy/parametrizedBonusesFlow.groovy`
+1. We have example flow (DSL script): [parametrizedBonusesFlow.groovy](https://github.com/ansvir/indecy/blob/master/core/core-java/src/test/resources/parametrizedBonusesFlow.groovy)
 2. We have next declaration:
 ```java
 private static final String PERFORMANCE = "PERFORMANCE";
