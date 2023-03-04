@@ -22,7 +22,6 @@
         <dependency>
             <groupId>org.itique.indecy</groupId>
             <artifactId>core-groovy</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!-- test dependencies -->
