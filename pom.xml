@@ -7,7 +7,7 @@
     <groupId>org.itique.indecy</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>indecy / parent</name>
 
     <modules>
@@ -54,7 +54,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/itique/indecy-core</url>
+            <url>https://maven.pkg.github.com/ansvir/indecy</url>
         </repository>
     </distributionManagement>
 
