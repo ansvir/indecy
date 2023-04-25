@@ -50,4 +50,12 @@
         </pluginManagement>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/itique/indecy-core</url>
+        </repository>
+    </distributionManagement>
+
 </project>
